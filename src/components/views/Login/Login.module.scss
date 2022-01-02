@@ -1,0 +1,13 @@
+@import '../../../styles/settings.scss';
+
+.component {
+  padding: $base-size;
+  display: flex;
+  flex-direction: column;
+}
+
+.login, .password, .button{
+text-align: center;
+margin: 20px auto 20px auto;
+width: 10em
+}
