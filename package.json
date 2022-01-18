@@ -10,22 +10,7 @@
     "start:api": "yarn build && node server.js",
     "start-and-test": "run-p start-silent test ",
     "build": "react-scripts build",
-    "lint": "esw --watch --clear",
-    "test": "react-scripts test --noStackTrace",
-    "test-all": "react-scripts test --watchAll=false --noStackTrace",
-    "test-related": "react-scripts test --watchAll=false --noStackTrace --findRelatedTests",
     "eject": "react-scripts eject"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.js": [
-      "yarn test-related --",
-      "eslint"
-    ]
   },
   "browserslist": {
     "production": [
