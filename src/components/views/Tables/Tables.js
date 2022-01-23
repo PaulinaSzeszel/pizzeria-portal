@@ -9,17 +9,98 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
-const demoContent = {
-  tables: [
-    'Table 1',
-    'Table 2',
-    'Table 3',
-  ],
-  workingHours: {
-    open: 12,
-    close: 24,
+const demoContent = [
+  {
+    hour: '12:00 - 12:30',
+    tables: [
+      { table: 1, status: 'booked', bookingId: 0001 },
+      { table: 2, status: 'free', bookingId: null },
+      { table: 3, status: 'event', bookingId: 1001 },
+      { table: 4, status: 'booked', bookingId: 0002 },
+    ],
   },
-};
+  {
+    hour: '12:30 - 13:00',
+    tables: [
+      { table: 1, status: 'booked', bookingId: 0003 },
+      { table: 2, status: 'booked', bookingId: 0004 },
+      { table: 3, status: 'event', bookingId: 1002 },
+      { table: 4, status: 'free', bookingId: null },
+    ],
+  },
+  {
+    hour: '13:00 - 13:30',
+    tables: [
+      { table: 1, status: 'booked', bookingId: 0005 },
+      { table: 2, status: 'event', bookingId: 1003 },
+      { table: 3, status: 'event', bookingId: 1004 },
+      { table: 4, status: 'free', bookingId: null },
+    ],
+  },
+  {
+    hour: '13:30 - 14:00',
+    tables: [
+      { table: 1, status: 'booked', bookingId: 0006 },
+      { table: 2, status: 'booked', bookingId: 0007 },
+      { table: 3, status: 'booked', bookingId: 0008 },
+      { table: 4, status: 'free', bookingId: null },
+    ],
+  },
+  {
+    hour: '14:00 - 14:30',
+    tables: [
+      { table: 1, status: 'booked', bookingId: 0009 },
+      { table: 2, status: 'free', bookingId: null },
+      { table: 3, status: 'free', bookingId: null },
+      { table: 4, status: 'free', bookingId: null },
+    ],
+  },
+  {
+    hour: '14:30 - 15:00',
+    tables: [
+      { table: 1, status: 'booked', bookingId: 0010 },
+      { table: 2, status: 'event', bookingId: 1005 },
+      { table: 3, status: 'booked', bookingId: 0011 },
+      { table: 4, status: 'free', bookingId: null },
+    ],
+  },
+  {
+    hour: '15:00 - 15:30',
+    tables: [
+      { table: 1, status: 'event', bookingId: 1006 },
+      { table: 2, status: 'event', bookingId: 1007 },
+      { table: 3, status: 'event', bookingId: 1008 },
+      { table: 4, status: 'free', bookingId: null },
+    ],
+  },
+  {
+    hour: '15:30 - 16:00',
+    tables: [
+      { table: 1, status: 'booked', bookingId: 0012 },
+      { table: 2, status: 'booked', bookingId: 0013 },
+      { table: 3, status: 'free', bookingId: null },
+      { table: 4, status: 'free', bookingId: null },
+    ],
+  },
+  {
+    hour: '16:00 - 16:30',
+    tables: [
+      { table: 1, status: 'booked', bookingId: 0014 },
+      { table: 2, status: 'event', bookingId: 1009 },
+      { table: 3, status: 'booked', bookingId: 0015 },
+      { table: 4, status: 'booked', bookingId: 0016 },
+    ],
+  },
+  {
+    hour: '16:30 - 17:00',
+    tables: [
+      { table: 1, status: 'booked', bookingId: 0017 },
+      { table: 2, status: 'event', bookingId: 1010 },
+      { table: 3, status: 'booked', bookingId: 0018 },
+      { table: 4, status: 'free', bookingId: null },
+    ],
+  },
+];
 
 const renderActions = (status, table) => {
   switch (status) {

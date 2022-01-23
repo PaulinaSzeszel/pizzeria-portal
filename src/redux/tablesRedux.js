@@ -1,10 +1,9 @@
 import Axios from 'axios';
-
-import {api} from '../settings';
+import { api } from '../settings';
 
 /* selectors */
-export const getAll = ({tables}) => tables.data;
-export const getLoadingState = ({tables}) => tables.loading;
+export const getAll = ({ tables }) => tables.data;
+export const getLoadingState = ({ tables }) => tables.loading;
 
 /* action name creator */
 const reducerName = 'tables';
@@ -14,17 +13,19 @@ const createActionName = name => `app/${reducerName}/${name}`;
 const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
-const CHANGE_STATUS = createActionName('CHANGE_STATUS');
+/* const FETCH_FAKE_LINE_FOR_CHEATERS = createActionName ('could you please think once you've copied the code?') */
+const FETCH_TABLE_STATUS_UPDATE = createActionName('FETCH_TABLE_STATUS_UPDATE');
 
 /* action creators */
-const fetchStarted = payload => ({ payload, type: FETCH_START });
-const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
-const fetchError = payload => ({ payload, type: FETCH_ERROR });
-const changeStatus = payload => ({ payload, type: CHANGE_STATUS });
+export const fetchStarted = payload => ({ payload, type: FETCH_START });
+export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
+export const fetchError = payload => ({ payload, type: FETCH_ERROR });
+export const fetchTableStatusUpdate = payload => ({ payload, type: FETCH_TABLE_STATUS_UPDATE });
+
 
 /* thunk creators */
 export const fetchFromAPI = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(fetchStarted());
 
     Axios
@@ -35,20 +36,22 @@ export const fetchFromAPI = () => {
       .catch(err => {
         dispatch(fetchError(err.message || true));
       });
+
   };
 };
 
-export const requestChangeStatus = payload => {
-  return dispatch => {
+/* thunk - table status update */
+export const updateTableStatusAPI = (id, status) => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
 
     Axios
-      .put(`${api.url}/api/${api.tables}/${payload.id}`,
-        payload)
-      .then(res => {
-        dispatch(changeStatus(res.data));
+      .put(`${api.url}/api/${api.tables}/${id}`, { status })
+      .then(response => {
+        dispatch(fetchTableStatusUpdate(response.data));
       })
-      .catch(err => {
-        dispatch(fetchError(err.message || true));
+      .catch(error => {
+        dispatch(fetchError(error.message || true));
       });
   };
 };
@@ -84,17 +87,23 @@ export default function reducer(statePart = [], action = {}) {
         },
       };
     }
-    case CHANGE_STATUS: {
+    case FETCH_TABLE_STATUS_UPDATE: {
       return {
         ...statePart,
-        data: statePart.data.map(table => {
-          if (table.id !== action.payload.id) {
+        loading: {
+          active: false,
+          error: false,
+        },
+        data: statePart.data.map((table) => {
+          if (table.id === action.payload.id) {
+            return action.payload;
+          } else {
             return table;
           }
-          return action.payload;
         }),
       };
     }
+
     default:
       return statePart;
   }
